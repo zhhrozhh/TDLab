@@ -22,11 +22,11 @@ def t_cluster_max(data):
         d[mx] = w*d1 + (1-w)*d2
         mx += 1
         m = 0
-        if scode1 > mxi:
+        if scode1 >= mxi:
             m+=res[scode1-mxi][3]
         else:
             m+=1
-        if (scode2) > mxi:
+        if (scode2) >= mxi:
             m+=res[scode2-mxi][3]
         else:
             m+=1
