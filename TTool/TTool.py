@@ -74,21 +74,23 @@ def t_corr_group(typ = 'max',data = None,gamount = 4):
         sp = []
         group = []
         if typ == 'max':
-            Z = t_cluster_max(data)
+            Z = t_cluster_max(d)
         else:
-            Z = t_cluster_min(data)
+            Z = t_cluster_min(d)
         for i in range(0,len(Z)):
             if Z[i][3] >= gamount:
                 sp = [Z[i][0],Z[i][1]]
                 while len(sp):
                     s = sp.pop()
                     if s >= len(cols):
-                        sp.append(Z[s-len(cols)][0])
-                        sp.append(Z[s-len(cols)][1])
+                        sp.append(Z[int(s-len(cols))][0])
+                        sp.append(Z[int(s-len(cols))][1])
                     else:
-                        group.append(cols[s])
-                        d.pop(s)
+                        group.append(cols[int(s)])
+                        d.pop(cols[int(s)])
                 res.append(group)
                 break
+    if len(d.columns):
+        res.append(list(d.columns))
     return res
 
