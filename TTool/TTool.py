@@ -1,7 +1,10 @@
 import numpy as np
 import pandas as pd
 from scipy.cluster import hierarchy
-
+try:
+    import quandl
+except:
+    pass
 def t_cluster_max(data):
     d = data.copy()
     d.columns = range(len(d.columns))
@@ -93,4 +96,26 @@ def t_corr_group(typ = 'max',data = None,gamount = 4):
     if len(d.columns):
         res.append(list(d.columns))
     return res
+
+def quandl_data_getter(scodes,attr = 'Close',quandl_apikey = None):
+    quandl.ApiConfig.api_key = quandl_apikey
+    res = pd.DataFrame()
+    res_p = pd.DataFrame()
+    assert attr in ['Close','Open','High','Low','Volume']
+    for scode in scodes:
+        dt = quandl.get("EOD/"+scode.replace(",","_"))
+        s = dt[attr]
+        split = dt['Split']
+        sidx = split[split!=1].index
+        for idx in sidx:
+            s.loc[:idx] = s.loc[:idx]/split.loc[idx]
+            s.loc[idx] = s.loc[idx]*split.loc[idx]
+        res[scode] = (s-s.shift(1))/s.shift(1)
+        res_p[scode] = s
+    res = res.dropna()
+    res_p = res_p.loc[res.index]
+    quandl.ApiConfig.api_key = None
+    return res,res_p
+
+
 
