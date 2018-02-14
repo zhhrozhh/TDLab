@@ -21,7 +21,7 @@ def t_cluster_max(data):
         
         s1 = d1.std(ddof = 0)
         s2 = d2.std(ddof = 0)
-        w = min(max((2*s1*s2*corr-2*s2**2)/(2*s1**2+2*s2**2-4*s1*s2*corr),0),1)
+        w = min(max((2*s2**2 - 2*s1*s2*corr)/(2*s1**2+2*s2**2-4*s1*s2*corr),0),1)
         d[mx] = w*d1 + (1-w)*d2
         mx += 1
         m = 0
@@ -50,7 +50,7 @@ def t_cluster_min(data):
         d2 = d.pop(scode2)
         s1 = d1.std(ddof = 0)
         s2 = d2.std(ddof = 0)
-        w = min(max((2*s1*s2*corr-2*s2**2)/(2*s1**2+2*s2**2-4*s1*s2*corr),0),1)
+        w = min(max((2*s2**2 - 2*s1*s2*corr)/(2*s1**2+2*s2**2-4*s1*s2*corr),0),1)
         d[mx] = w*d1 + (1-w)*d2
         mx += 1
         m = 0
@@ -103,7 +103,7 @@ def quandl_data_getter(scodes,attr = 'Close',quandl_apikey = None):
     res_p = pd.DataFrame()
     assert attr in ['Close','Open','High','Low','Volume']
     for scode in scodes:
-        dt = quandl.get("EOD/"+scode.replace(",","_"))
+        dt = quandl.get("EOD/"+scode.replace(".","_"))
         s = dt[attr]
         split = dt['Split']
         sidx = split[split!=1].index
@@ -117,5 +117,7 @@ def quandl_data_getter(scodes,attr = 'Close',quandl_apikey = None):
     quandl.ApiConfig.api_key = None
     return res,res_p
 
-
+T_indices = ['UVXY','VCSH','SHV','IWM','RSX','VIIX','PSQ','UPRO','QLD','QID','QQQX','SPY','SSO','UCO','SDS','SH','SPXU','SQQQ','UDOW','DDM','VMAX','VIXM',
+'VXZ','VIXY','VXX','SPXL']
+T_sectors = ['XLE','XLI','XLK','XLU','XLP','XLY','XLRE','XLB','XLF'] 
 
