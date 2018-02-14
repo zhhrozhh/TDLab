@@ -117,7 +117,7 @@ def quandl_data_getter(scodes,attr = 'Close',quandl_apikey = None):
     quandl.ApiConfig.api_key = None
     return res,res_p
 
-T_indices = ['UVXY','VCSH','SHV','IWM','RSX','VIIX','PSQ','UPRO','QLD','QID','QQQX','SPY','SSO','UCO','SDS','SH','SPXU','SQQQ','UDOW','DDM','VMAX','VIXM',
+T_indices = ['UVXY','VCSH','SHV','IWM','RSX','VIIX','PSQ','UPRO','QLD','QID','QQQX','SPY','SSO','UCO','SDS','SH','SPXU','SQQQ','UDOW','DDM','VIXM',
 'VXZ','VIXY','VXX','SPXL']
 T_sectors = ['XLE','XLI','XLK','XLU','XLP','XLY','XLRE','XLB','XLF'] 
 
